@@ -1,0 +1,11 @@
+﻿Main server:  analyzerserver.database.windows.net
+Username:  Work
+Pass: Mondavi1
+
+-- Make sure you are on Master db
+CREATE LOGIN analyzerdbdevuser WITH password='mydbdevuser01!';
+
+-- switch to db
+CREATE USER analyzerdbdevuser FROM LOGIN analyzerdbdevuser;
+EXEC sp_addrolemember N'db_owner', N'analyzerdbdevuser'
+GO
