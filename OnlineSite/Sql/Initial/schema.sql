@@ -77,7 +77,6 @@ CREATE TABLE [user]
      firstname        NVARCHAR(255) NULL,
      middlename        NVARCHAR(255) NULL,
      lastname        NVARCHAR(255) NULL,
-     phone_number        NVARCHAR(255) NULL,
 	 username        NVARCHAR(255) NULL,
 	 passwd        NVARCHAR(255) NULL,
      picture_url        NVARCHAR(255) NULL,

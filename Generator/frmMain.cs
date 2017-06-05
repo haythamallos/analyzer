@@ -1021,10 +1021,8 @@ namespace CodeGenerator
             // 
             this.txtCS.FormattingEnabled = true;
             this.txtCS.Items.AddRange(new object[] {
-            "Data Source=HAYTHAMALLO38E3\\SQLEXPRESS;Initial Catalog=localanalyzerdb;Persist Securit" +
-                "y Info=True;User ID=analyzerdbdevuser;Password=analyzerdbdevuser;",
-            "Data Source=52.8.194.212;Initial Catalog=vetappmaindbprod;Persist Security Info=T" +
-                "rue;User ID=vetappproddbuser;Password=wRax57uswENADrAc;"});
+            "Data Source=HAYTHAMALLO38E3\\SQLEXPRESS;Initial Catalog=localanalyzerdb;Persist Security Info=True;User ID=localanalyzerdbuser;Password=localanalyzerdbuser;",
+            "Server=tcp:analyzerserver.database.windows.net,1433;Initial Catalog=analyzerdbdev;Persist Security Info=False;User ID=analyzerdbdevuser;Password=mydbdevuser01!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"});
             this.txtCS.Location = new System.Drawing.Point(13, 23);
             this.txtCS.Name = "txtCS";
             this.txtCS.Size = new System.Drawing.Size(1100, 21);

@@ -6,9 +6,7 @@
 
   <ItemGroup>
     <Content Include="wwwroot\Index.html" />
-    <Content Include="wwwroot\js\My.js" />
     <Content Include="wwwroot\js\offlineutils.js" />
-    <Content Include="wwwroot\js\storageutils.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />

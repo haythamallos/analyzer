@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using Analyzer.Engine.Common;
 
 namespace OnlineSite
 {
@@ -30,6 +27,12 @@ namespace OnlineSite
         {
             // Add framework services.
             services.AddMvc();
+
+            // Add functionality to inject IOptions<T>
+            services.AddOptions();
+
+            // Add our Config object so it can be injected
+            services.Configure<ConfigSettings>(Configuration.GetSection("MySettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
