@@ -102,7 +102,7 @@ namespace OnlineSite.Controllers
                             new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
 
                         await HttpContext.Authentication.SignInAsync("MyCookieMiddlewareInstance", principal);
-
+                        return RedirectToAction("Index", "Dashboard");
                     }
                 }
             }

@@ -32,7 +32,10 @@ namespace OnlineSite
             services.AddOptions();
 
             // Add our Config object so it can be injected
-            services.Configure<ConfigSettings>(Configuration.GetSection("MySettings"));
+            services.Configure<ConfigSettings>(Configuration.GetSection("ConfigSettings"));
+
+            // *If* you need access to generic IConfiguration this is **required**
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
