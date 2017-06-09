@@ -29,14 +29,15 @@ namespace OnlineSite.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Register(UserModel userModel)
+        public async Task<IActionResult> Register(UserModel userModel)
         {
             try
             {
                 BusFacCore busFacCore = new BusFacCore(_settings);
                 UtilsValidation utilsValidation = new UtilsValidation();
                 BusUser busUser = new BusUser();
-                if ((utilsValidation.IsValidEmail(userModel.Username)) && (busUser.IsValidPasswd(userModel.Password)))
+                if ((!string.IsNullOrEmpty(userModel.Username)) && (!string.IsNullOrEmpty(userModel.Password)) && 
+                    (utilsValidation.IsValidEmail(userModel.Username)) && (busUser.IsValidPasswd(userModel.Password)))
                 {
                     if (!(userModel.Password.Equals(userModel.ConfirmPassword, StringComparison.Ordinal)))
                     {
@@ -51,7 +52,16 @@ namespace OnlineSite.Controllers
                             User user = busFacCore.UserCreate(userModel.Username, userModel.Password);
                             if ((user != null) && (user.UserID > 0))
                             {
-                                return RedirectToAction("Index");
+                                var claims = new[] {
+                                    new Claim("name", userModel.Username)
+                                };
+
+                                var principal = new ClaimsPrincipal(
+                                    new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
+
+                                await HttpContext.Authentication.SignInAsync("MyCookieMiddlewareInstance", principal);
+                                return RedirectToAction("Index", "Dashboard");
+
                             }
                             else
                             {
@@ -86,7 +96,8 @@ namespace OnlineSite.Controllers
         {
             BusFacCore busFacCore = new BusFacCore(_settings);
             BusUser busUser = new BusUser();
-            if ((busUser.IsValidUsername(userModel.Username)) && (busUser.IsValidPasswd(userModel.Password)))
+            if ((!string.IsNullOrEmpty(userModel.Username)) && (!string.IsNullOrEmpty(userModel.Password)) &&
+                (busUser.IsValidUsername(userModel.Username)) && (busUser.IsValidPasswd(userModel.Password)))
             {
                 bool UserExist = busFacCore.Exist(userModel.Username);
                 if (UserExist)
@@ -106,6 +117,7 @@ namespace OnlineSite.Controllers
                     }
                 }
             }
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -113,7 +125,7 @@ namespace OnlineSite.Controllers
         {
             await HttpContext.Authentication.SignOutAsync("MyCookieMiddlewareInstance");
 
-            return Ok();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

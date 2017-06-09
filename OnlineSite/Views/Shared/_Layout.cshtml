@@ -8,7 +8,20 @@
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/bootstrap-imageupload.min.css" />
+        <link rel="stylesheet" href="~/css/img-upload.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/sidebar-nav.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/spinners.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/bootstrap-datepicker.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/morris.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/sweetalert.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/wizard.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/animate.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/colors//default-dark.css" asp-append-version="true" />
+
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -18,19 +31,91 @@
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
-<body>
-   
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2017 - Stress Analyzer Demo</p>
-        </footer>
+<body class="fix-sidebar">
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="cssload-speeding-wheel"></div>
     </div>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header">
+                <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+                @*<div class="top-left-part"><a class="logo" href="~/Dashboard"><b><!--This is dark logo icon--><img src="~/images/analyzerlogo.png" alt="home" class="dark-logo" /><!--This is light logo icon--><img src="~/images/analyzerlogo.png" alt="home" class="light-logo" /></b><span class="hidden-xs"><!--This is dark logo text--><img src="~/images/analyzerlogo.png" alt="home" class="dark-logo" /><!--This is light logo text--><img src="~/images/analyzerlogo.png" alt="home" class="light-logo" /></span></a></div>*@
+                <div class="top-left-part"></div>
+                <ul class="nav navbar-top-links navbar-left hidden-xs">
+                    <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
+                    <li>
+                        <form role="search" class="app-search hidden-xs">
+                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a>
+                        </form>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- Left navbar-header -->
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+                <div class="user-profile">
+                    <div class="dropdown user-pro-body">
+                        <div><img src="~/images/generic-user.png" alt="user-img" class="img-circle"></div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Steave Gection <span class="caret"></span></a>
+                        <ul class="dropdown-menu animated flipInY">
+                            <li><a href="~/Dashboard/Profile"><i class="ti-user"></i> My Profile</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="~/Dashboard/Logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <ul class="nav" id="side-menu">
+                    <li class="sidebar-search hidden-sm hidden-md hidden-lg">
+                        <!-- input-group -->
+                        <div class="input-group custom-search-form">
+                            <input type="text" class="form-control" placeholder="Search..."> <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
+                            </span>
+                        </div>
+                        <!-- /input-group -->
+                    </li>
+                    <li class="nav-small-cap m-t-10">--- Main Menu</li>
+                    <li>
+                        <a href="~/Dashboard" class="waves-effect active"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Dashboard </span></a>
+                    </li>
+                    <li><a href="~/Dashboard/Logout" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li>
+                    <li class="nav-small-cap">--- Support</li>
+                    <li><a href="~/Dashboard/Documentation" class="waves-effect"><i class="fa fa-circle-o text-danger"></i> <span class="hide-menu">Documentation</span></a></li>
+                    <li><a href="~/Dashboard/Gallery" class="waves-effect"><i class="fa fa-circle-o text-info"></i> <span class="hide-menu">Gallery</span></a></li>
+                    <li><a href="~/Dashboard/Faqs" class="waves-effect"><i class="fa fa-circle-o text-success"></i> <span class="hide-menu">Faqs</span></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /.container-fluid -->
+   
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/bootstrap-imageupload.min.js" asp-append-version="true"></script>
+        <script src="~/js/img-upload.js" asp-append-version="true"></script>
+        <script src="~/js/sidebar-nav.min.js" asp-append-version="true"></script>
+        <script src="~/js/bootstrap-datepicker.min.js" asp-append-version="true"></script>
+        <script src="~/js/custom.js" asp-append-version="true"></script>
+        <script src="~/js/morris.js" asp-append-version="true"></script>
+        <script src="~/js/raphael-min.js" asp-append-version="true"></script>
+        <script src="~/js/respond.min.js" asp-append-version="true"></script>
+        <script src="~/js/sweetalert.min.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
@@ -51,4 +136,5 @@
 
     @RenderSection("Scripts", required: false)
 </body>
+
 </html>

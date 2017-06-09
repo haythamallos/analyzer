@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Analyzer.Engine.Common;
+using OnlineSite.Models;
 
 namespace OnlineSite
 {
@@ -25,6 +26,7 @@ namespace OnlineSite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             // Add framework services.
             services.AddMvc();
 
@@ -36,6 +38,9 @@ namespace OnlineSite
 
             // *If* you need access to generic IConfiguration this is **required**
             services.AddSingleton<IConfiguration>(Configuration);
+
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,12 +60,11 @@ namespace OnlineSite
             }
 
             app.UseStaticFiles();
-
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
                 AuthenticationScheme = "MyCookieMiddlewareInstance",
-                LoginPath = new PathString("/Account/Unauthorized/"),
-                AccessDeniedPath = new PathString("/Account/Forbidden/"),
+                LoginPath = new PathString("/Home/Index/"),
+                AccessDeniedPath = new PathString("/Home/Index/"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true
             });

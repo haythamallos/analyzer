@@ -1,0 +1,155 @@
+﻿@model OnlineSite.Models.ProfileModel
+    @{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        ViewData["Title"] = "Profile Page";
+    }
+
+    <form asp-controller="Dashboard" asp-action="Profile" method="post" class="form-horizontal">
+        <div class="container-fluid">
+            <!-- .row -->
+            <div class="row">
+                <div class="col-md-4 col-xs-12">
+                    <div class="white-box">
+                        <div class="user-bg">
+                            <img width="100%" alt="user" src="~/images/generic-user.png">
+                            <div class="overlay-box">
+                                <div class="user-content">
+                                    <a href="javascript:void(0)"><img src="~/images/generic-user.png" class="thumb-lg img-circle" alt="img"></a>
+                                    <h4 class="text-white">User Name</h4>
+                                    <h5 class="text-white">info@myadmin.com</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <div class="white-box">
+                        <ul class="nav nav-tabs tabs customtab">
+                            <li class="active tab">
+                                <a href="#profile" data-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">Profile</span> </a>
+                            </li>
+                            <li class="tab">
+                                <a href="#photo" data-toggle="tab"> <span class="visible-xs"><i class="fa fa-photo"></i></span> <span class="hidden-xs">Photo</span> </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="profile">
+                                <div class="form-group">
+                                    <label class="col-md-12">Full Name</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="example-email" class="col-md-12">Email</label>
+                                    <div class="col-md-12">
+                                        <input asp-for="Username" type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" />
+                                        @*<input type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email">*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Password</label>
+                                    <div class="col-md-12">
+                                        <input type="password" value="password" class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Phone No</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="123 456 7890" class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Message</label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5" class="form-control form-control-line"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">Select Country</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control form-control-line">
+                                            <option>London</option>
+                                            <option>India</option>
+                                            <option>Usa</option>
+                                            <option>Canada</option>
+                                            <option>Thailand</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-success">Update Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="photo">
+                                <!-- bootstrap-imageupload. -->
+                                <div class="imageupload panel panel-default">
+                                    <div class="panel-heading clearfix">
+                                        <h3 class="panel-title pull-left">Upload Image</h3>
+                                        <div class="btn-group pull-right">
+                                            <button type="button" class="btn btn-default active">File</button>
+                                            <button type="button" class="btn btn-default">URL</button>
+                                        </div>
+                                    </div>
+                                    <div class="file-tab panel-body">
+                                        <label class="btn btn-default btn-file">
+                                            <span>Browse</span>
+                                            <!-- The file is stored here. -->
+                                            <input type="file" name="image-file">
+                                        </label>
+                                        <button type="button" class="btn btn-default">Remove</button>
+                                    </div>
+                                    <div class="url-tab panel-body">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control hasclear" placeholder="Image URL">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default">Submit</button>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-default">Remove</button>
+                                        <!-- The URL is stored here. -->
+                                        <input type="hidden" name="image-url">
+                                    </div>
+                                </div>
+
+                                <!-- bootstrap-imageupload method buttons. -->
+                                @*<button type="button" id="imageupload-disable" class="btn btn-danger">Disable</button>*@
+                                <button type="button" id="imageupload-enable" class="btn btn-success">Enable</button>
+                                <button type="button" id="imageupload-reset" class="btn btn-primary">Reset</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+        </div>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="~/js/bootstrap-imageupload.js"></script>
+
+    <script>
+        var $imageupload = $('.imageupload');
+        $imageupload.imageupload();
+
+        $('#imageupload-disable').on('click', function () {
+            $imageupload.imageupload('disable');
+            $(this).blur();
+        })
+
+        $('#imageupload-enable').on('click', function () {
+            $imageupload.imageupload('enable');
+            $(this).blur();
+        })
+
+        $('#imageupload-reset').on('click', function () {
+            $imageupload.imageupload('reset');
+            $(this).blur();
+        });
+    </script>
