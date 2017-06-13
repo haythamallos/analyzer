@@ -11,7 +11,7 @@
                 <div class="col-md-4 col-xs-12">
                     <div class="white-box">
                         <div class="user-bg">
-                            <img width="100%" alt="user" src="~/images/generic-user.png">
+                            <img id="photoImage" width="100%" alt="user" src="~/images/generic-user.png">
                             <div class="overlay-box">
                                 <div class="user-content">
                                     <a href="javascript:void(0)"><img src="~/images/generic-user.png" class="thumb-lg img-circle" alt="img"></a>
@@ -19,6 +19,11 @@
                                     <h5 class="text-white">info@myadmin.com</h5>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button class="btn btn-success">Update Profile</button>
                         </div>
                     </div>
                 </div>
@@ -37,7 +42,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Full Name</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line">
+                                        <input asp-for="FullName" type="text" placeholder="Johnathan Doe" class="form-control form-control-line">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -50,19 +55,19 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Password</label>
                                     <div class="col-md-12">
-                                        <input type="password" value="password" class="form-control form-control-line">
+                                        <input asp-for="Password" type="password" value="password" class="form-control form-control-line">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Phone No</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="123 456 7890" class="form-control form-control-line">
+                                        <input asp-for="PhoneNumber" type="text" placeholder="123 456 7890" class="form-control form-control-line">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Message</label>
                                     <div class="col-md-12">
-                                        <textarea rows="5" class="form-control form-control-line"></textarea>
+                                        <textarea asp-for="Message" rows="5" class="form-control form-control-line"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -75,11 +80,6 @@
                                             <option>Canada</option>
                                             <option>Thailand</option>
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <button class="btn btn-success">Update Profile</button>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                                         <label class="btn btn-default btn-file">
                                             <span>Browse</span>
                                             <!-- The file is stored here. -->
-                                            <input type="file" name="image-file">
+                                            <input asp-for="ImageFile"  type="file" name="image-file">
                                         </label>
                                         <button type="button" class="btn btn-default">Remove</button>
                                     </div>
@@ -146,6 +146,8 @@
         $('#imageupload-enable').on('click', function () {
             $imageupload.imageupload('enable');
             $(this).blur();
+            //document.getElementById("photoImage").src = "blaah";
+            //$("#photoImage").attr('src', $(this).val());
         })
 
         $('#imageupload-reset').on('click', function () {

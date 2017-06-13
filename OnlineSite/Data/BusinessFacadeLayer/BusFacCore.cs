@@ -86,6 +86,16 @@ namespace Analyzer.Engine.BusinessFacadeLayer
             }
             return bExist;
         }
+        public User UserGet(string username)
+        {
+            User user = null;
+            ArrayList arUser = Find(username);
+            if ((!HasError) && (arUser.Count == 1))
+            {
+                user = (User) arUser[0];
+            }
+            return user;
+        }
         public ArrayList Find(string username)
         {
             ArrayList arUser = null;

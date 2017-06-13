@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Analyzer.Engine.BusinessFacadeLayer;
+using Analyzer.Engine.Common;
+using Analyzer.Engine.DataAccessLayer.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using OnlineSite.Models;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +15,13 @@ namespace OnlineSite.Controllers
     [Authorize]
     public class DashboardController : Controller
     {
+        private IOptions<ConfigSettings> _settings = null;
+
+        public DashboardController(IOptions<ConfigSettings> settings)
+        {
+            _settings = settings;
+        }
+
         public string Username
         {
             get {
@@ -22,7 +33,6 @@ namespace OnlineSite.Controllers
 
         public IActionResult Index()
         {
-            string email = Username;
             return View();
         }
         public IActionResult Documentation()
@@ -40,7 +50,13 @@ namespace OnlineSite.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
-
+            string email = Username;
+            BusFacCore busFacCore = new BusFacCore(_settings);
+            User user = busFacCore.UserGet(Username);
+            if (user != null)
+            {
+                //ProfileModel model = Cnv.MtoD(user);
+            }
             return View();
         }
         [HttpPost]

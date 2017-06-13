@@ -58,20 +58,10 @@ namespace OnlineSite.Controllers
                         bool UserExist = busFacCore.Exist(userModel.Username);
                         if (!UserExist)
                         {
-
                             User user = busFacCore.UserCreate(userModel.Username, userModel.Password);
                             if ((user != null) && (user.UserID > 0))
                             {
-                                var claims = new[] {
-                                    new Claim("name", userModel.Username)
-                                };
-
-                                var principal = new ClaimsPrincipal(
-                                    new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
-
-                                await HttpContext.Authentication.SignInAsync("MyCookieMiddlewareInstance", principal);
-                                return RedirectToAction("Index", "Dashboard");
-
+                                return RedirectToAction("Login", userModel);
                             }
                             else
                             {
@@ -115,8 +105,15 @@ namespace OnlineSite.Controllers
                     User user = busFacCore.UserAuthenticate(userModel.Username, userModel.Password);
                     if ((user != null) && (user.UserID > 0))
                     {
+                        userModel.DisplayName = userModel.Username;
+                        if ((!string.IsNullOrEmpty(userModel.FirstName)) && (!string.IsNullOrEmpty(userModel.LastName)))
+                        {
+                            userModel.DisplayName = userModel.LastName + ", " + userModel.FirstName;
+                        }
+                        
                         var claims = new[] {
-                            new Claim("name", userModel.Username)
+                            new Claim("name", userModel.Username),
+                            new Claim(ClaimTypes.Name, userModel.DisplayName, ClaimValueTypes.String)
                         };
 
                         var principal = new ClaimsPrincipal(
@@ -131,6 +128,7 @@ namespace OnlineSite.Controllers
             ViewData["InvalidCredentials"] = true;
             return View("Index");
         }
+
 
         //public async Task<IActionResult> Logout()
         //{
