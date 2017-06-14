@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OnlineSite.Models;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -70,6 +71,19 @@ namespace OnlineSite.Controllers
             await HttpContext.Authentication.SignOutAsync("MyCookieMiddlewareInstance");
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImageUpload(IFormFile file)
+        {
+            //if (file.Length > 0)
+            //{
+            //    using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+            //    {
+            //        await file.CopyToAsync(fileStream);
+            //    }
+            //}
+            return View();
         }
     }
 }
