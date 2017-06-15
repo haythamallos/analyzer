@@ -112,6 +112,7 @@
 </form>
 
 <script src="~/js/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#imageBrowse').change(function () {
@@ -151,23 +152,23 @@
         $("#imgPreview").hide();
     };
 
-    var Uploadimage = function() {
+    var Uploadimage = function () {
         var file = $("#imageBrowse").get(0).files;
         var data = new FormData;
         data.append("ImageFile", file[0]);
 
         $.ajax({
-            type: "Post",
-            url: "/Dashobard/ImageUpload",
-            data: data,
-            contents: false,
+            type: "POST",
+            url: "/Dashboard/ImageUpload",
+            contentType: false,
             processData: false,
-            success: function (response) {
-
-
+            data: data,
+            success: function (message) {
+                alert(message);
+            },
+            error: function () {
+                alert("There was error uploading files!");
             }
-        })
-        //
-
+        });
     };
 </script>

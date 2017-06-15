@@ -2,10 +2,12 @@
 using Analyzer.Engine.Common;
 using Analyzer.Engine.DataAccessLayer.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Net.Http.Headers;
 using OnlineSite.Models;
 using System.IO;
 using System.Linq;
@@ -17,10 +19,12 @@ namespace OnlineSite.Controllers
     public class DashboardController : Controller
     {
         private IOptions<ConfigSettings> _settings = null;
+        private IHostingEnvironment _hostingEnv;
 
-        public DashboardController(IOptions<ConfigSettings> settings)
+        public DashboardController(IOptions<ConfigSettings> settings, IHostingEnvironment env)
         {
-            _settings = settings;
+            this._settings = settings;
+            this._hostingEnv = env;
         }
 
         public string Username
@@ -74,15 +78,29 @@ namespace OnlineSite.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ImageUpload(IFormFile file)
+        public IActionResult ImageUpload()
         {
-            //if (file.Length > 0)
-            //{
-            //    using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
-            //    {
-            //        await file.CopyToAsync(fileStream);
-            //    }
-            //}
+            long size = 0;
+            var files = Request.Form.Files;
+            if ((files != null) && (files.Count > 0))
+            {
+                var file = files[0];
+                var filename = ContentDispositionHeaderValue
+                           .Parse(file.ContentDisposition)
+                           .FileName
+                           .Trim('"');
+                //filename = _hostingEnv.WebRootPath + $@"\{FileName}";
+                filename = _hostingEnv.WebRootPath + $@"\photo-1.jpg";
+                size += file.Length;
+                using (FileStream fs = System.IO.File.Create(filename))
+                {
+                    file.CopyTo(fs);
+                    fs.Flush();
+                }
+            }
+
+            ViewBag.Message = $"{files.Count} file(s) / { size} bytes uploaded successfully!";
+
             return View();
         }
     }
