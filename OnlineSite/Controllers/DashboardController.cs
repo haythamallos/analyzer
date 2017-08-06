@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using OnlineSite.Models;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -81,6 +82,9 @@ namespace OnlineSite.Controllers
         public IActionResult ImageUpload()
         {
             long size = 0;
+            int height = 0;
+            int width = 0;
+            string type = null;
             var files = Request.Form.Files;
             if ((files != null) && (files.Count > 0))
             {
@@ -90,12 +94,33 @@ namespace OnlineSite.Controllers
                            .FileName
                            .Trim('"');
                 //filename = _hostingEnv.WebRootPath + $@"\{FileName}";
-                filename = _hostingEnv.WebRootPath + $@"\photo-1.jpg";
+                filename = _hostingEnv.WebRootPath + $@"\Image-Profile-1.jpg";
                 size += file.Length;
                 using (FileStream fs = System.IO.File.Create(filename))
                 {
                     file.CopyTo(fs);
                     fs.Flush();
+                }
+
+                foreach (string key in Request.Form.Keys)
+                {
+                    if (key.StartsWith("Height"))
+                    {
+                        height = Convert.ToInt32(Request.Form[key]);
+                    }
+                    if (key.StartsWith("Width"))
+                    {
+                        width = Convert.ToInt32(Request.Form[key]);
+                    }
+                    if (key.StartsWith("Type"))
+                    {
+                        type = Request.Form[key];
+                    }
+                    if (key.StartsWith("Size"))
+                    {
+                        size = Convert.ToInt32(Request.Form[key]);
+                    }
+
                 }
             }
 

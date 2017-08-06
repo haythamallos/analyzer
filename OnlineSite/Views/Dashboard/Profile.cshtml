@@ -21,11 +21,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <button class="btn btn-success">Update Profile</button>
-                    </div>
-                </div>
+               
             </div>
             <div class="col-md-8 col-xs-12">
                 <div class="white-box">
@@ -82,6 +78,11 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-success">Update Profile</button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="tab-pane" id="photo">
@@ -98,7 +99,7 @@
                                         <a href="#" onclick="ClearPreview()"><i class="icon-trash"></i></a>
                                         <span id="description"></span>
                                     </div>
-                                    <a href="#" class="btn btn-default" onclick="Uploadimage()">Upload</a>
+                                    <a href="#" class="btn btn-default" onclick="Uploadimage()">Update Photo</a>
                                 </div>
                             </div>
                         </div>
@@ -115,6 +116,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
+
+        var height;
+        var width;
+        var type;
+        var size;
+
+
         $('#imageBrowse').change(function () {
             var File = this.files;
             if (File && File[0]) {
@@ -135,9 +143,9 @@
                 var height = this.height;
                 var width = this.width;
                 var type = file.type;
-                var size = ~~(file.size / 1024) + "KB";
+                var size = file.size;
                 $("#targetImg").attr('src', _file.target.result);
-                $("#description").text("Size:  " + size + ", " + height + "X " + width + ", " + type + "");
+                $("#description").text("Size:  " + ~~(size / 1024) + "KB, " + height + "X " + width + ", " + type + "");
 
                 $("#imgPreview").show();
             }
@@ -156,6 +164,11 @@
         var file = $("#imageBrowse").get(0).files;
         var data = new FormData;
         data.append("ImageFile", file[0]);
+        data.append("Height", height);
+        data.append("Width", width);
+        data.append("Type", type);
+        data.append("Size", size);
+
 
         $.ajax({
             type: "POST",
